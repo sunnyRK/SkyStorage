@@ -1,0 +1,24 @@
+{
+  "name": "filecoin",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@emotion/cache": "^10.0.29",
+    "@emotion/core": "^10.0.28",
+    "@emotion/css": "^10.0.27",
+    "@emotion/react": "^11.0.0-next.13",
+    "@emotion/server": "^11.0.0-next.13",
+    "@emotion/styled": "^10.0.27",
+    "@textile/powergate-client": "^0.2.0",
+    "next": "9.4.4",
+    "next-routes": "^1.4.2",
+    "react": "16.13.1",
+    "react-dom": "16.13.1",
+    "slate-react-system": "0.0.7"
+  }
+}
