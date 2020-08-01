@@ -71,7 +71,7 @@ async function exampleCode () {
         const bytes = await pow.ffs.get(cid)
         console.log(bytes)
 
-        await fs.writeFile('/home/sunny123/Blockchain/HackFS/test1.png', new Buffer(bytes), callback)
+        // await fs.writeFile('/home/sunny123/Blockchain/HackFS/test1.png', new Buffer(bytes), callback)
     
         // // send FIL from an address managed by your FFS instance to any other address
         // await pow.ffs.sendFil(addrsList[0].addr, "<some other address>", 1000)
