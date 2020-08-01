@@ -1,6 +1,6 @@
 pragma solidity ^0.6.0;
 
-import "./utils//Ownable.sol";
+import "./Ownable.sol";
 
 contract EthFilecoinStorage is Ownable {
     
@@ -11,7 +11,7 @@ contract EthFilecoinStorage is Ownable {
         bool isRegister;
     }
     
-    mapping(address => profile) public profileMapping;
+    mapping(address => profile) private profileMapping;
     
     modifier isRegister() {
         require(profileMapping[msg.sender].isRegister, "Not registered.");
@@ -23,6 +23,7 @@ contract EthFilecoinStorage is Ownable {
         _;
     }
     
+    event registerUserevent(address owner);
     event uploadHash(address owner, string ipfsHash);
     
     function registerUser(string memory filecoinToken, string memory userFilecoinAddress) public isNotRegister {
@@ -30,10 +31,13 @@ contract EthFilecoinStorage is Ownable {
         profileMapping[msg.sender].filecoinToken = filecoinToken;
         profileMapping[msg.sender].userFilecoinAddress = userFilecoinAddress;
         profileMapping[msg.sender].isRegister = true;
+        emit registerUserevent(msg.sender);
     }
     
     function UploadNewIpfsHash(string memory ipfsHash) public isRegister {
         profileMapping[msg.sender].ipfsHashOfMedia.push(ipfsHash);
+        emit uploadHash(msg.sender, ipfsHash);
+        
     }
     
     function getIpfsHashByIndex(uint256 index) isRegister public view returns(string memory) {
