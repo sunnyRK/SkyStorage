@@ -1,6 +1,6 @@
 pragma solidity ^0.6.0;
 
-import "./Ownable.sol";
+import "./utils//Ownable.sol";
 
 contract EthFilecoinStorage is Ownable {
     
