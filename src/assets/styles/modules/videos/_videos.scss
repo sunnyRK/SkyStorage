@@ -1,0 +1,20 @@
+.videos {
+  .videos-header {
+    display: flex;
+    justify-content: space-between;
+    .upload-btn {
+      background-color: $app-color;
+      color: #ffffff;
+    }
+  }
+  .videos-content {
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    .video-player {
+      height: 200px;
+      width: 357px;
+      margin: 10px 0 0 10px;
+    }
+  }
+}
