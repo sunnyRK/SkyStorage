@@ -1,0 +1,14 @@
+.dashboard {
+  padding: 30px;
+  .dashboard-tabs {
+    border:#203a5b 1px solid;
+    .tabs-flexcontainer {
+      button {
+        width: calc(100%/2);
+      }
+    }
+  }
+  .dashboard-content {
+    padding: 30px;
+  }
+}
