@@ -6,27 +6,34 @@ import Landing from './Landing';
 import { getFilecoinInstance } from '../../../../config/contractinstance';
 import { _handleCreateToken, _setToken, _handleInfo } from '../../utils';
 
+import web3 from "../../../../config/web3";
+
 class LandingContainer extends Component {
   async componentDidMount() {
     // const isUserRegistered = await getFilecoinInstance.methods.isUserRegistered().call();
-    const isUserRegistered = false;
-    if (isUserRegistered) {
-      this.props.router.push('/dashboard');
-    }
+    // const isUserRegistered = false;
+    // if (isUserRegistered) {
+    //   this.props.router.push('/dashboard');
+    // }
   }
 
   onRegisterClick = async () => {
-    const filecoinToken = await _handleCreateToken();
-    _setToken(filecoinToken);
-    const { addrsList, info } = await _handleInfo();
-    // const accounts = await web3.eth.getAccounts();
-    // await getFilecoinInstance.methods
-    //   .registerUser(filecoinToken, addrsList[0].addr)
-    //   .send({ from: accounts[0] });
-    this.props.router.push('/dashboard');
-    toast.success('Successfully registered', {
-      position: toast.POSITION.TOP_RIGHT,
-    });
+    try {
+      const accounts = await web3.eth.getAccounts();
+      const filecoinToken = await _handleCreateToken();
+      _setToken(filecoinToken);
+      const { addrsList, info } = await _handleInfo();
+      await getFilecoinInstance().methods
+        .registerUser(filecoinToken, addrsList[0].addr)
+        .send({ from: accounts[0] });
+      this.props.router.push('/dashboard');
+      toast.success('Successfully registered', {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+      
+    } catch (error) {
+      
+    }
   }
 
   render() {

@@ -30,14 +30,14 @@ class MainTemplateContainer extends Component {
         metamaskAddress: accounts[0],
       });
     } else {
-      // const isUserRegistered = await getFilecoinInstance.methods.isUserRegistered().call();
-      const isUserRegistered = true;
-      if (!isUserRegistered) {
+      const isRegisterUser = await getFilecoinInstance().methods.isRegisterUser(accounts[0]).call();
+      if (!isRegisterUser) {
         this.props.router.push('/');
       } else {
-        // const filecoinToken = await getFilecoinInstance.methods.getFilecoinToken().call();
-        // console.log('filecoinToken=====', filecoinToken);
-        // _setToken(filecoinToken);
+        const filecoinToken = await getFilecoinInstance().methods.getFilecoinToken(accounts[0]).call();
+        console.log('filecoinToken=====', filecoinToken);
+        _setToken(filecoinToken);
+        this.props.router.push('/dashboard');
       }
       this.setState({ metamaskAddress: accounts[0], metamaskLoading: false });
     }

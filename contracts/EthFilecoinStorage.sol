@@ -55,4 +55,6 @@ contract EthFilecoinStorage is Ownable {
     function getFilecoinUserAddress() isRegister public view returns(string memory) {
         return profileMapping[msg.sender].userFilecoinAddress;
     }
+
+    function 
 }
