@@ -7,9 +7,9 @@ class Dashboard extends Component {
  
   render() {
     return (
-      // <MainTemplate>
+      <MainTemplate>
         <DashboardContainer />
-      // </MainTemplate>
+      </MainTemplate>
     );
   }
 }

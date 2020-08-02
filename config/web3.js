@@ -1,4 +1,4 @@
-const HDWalletProvider = require('truffle-hdwallet-provider');
+// const HDWalletProvider = require('truffle-hdwallet-provider');
 const Web3 = require('web3');
 let web3;
 if(typeof window !== 'undefined' && typeof window.web3 !== 'undefined') {

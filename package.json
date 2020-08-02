@@ -27,7 +27,9 @@
     "react-toastify": "^6.0.8",
     "sass": "^1.26.10",
     "slate-react-system": "0.0.7",
-    "video-react": "^0.14.1"
+    "truffle-hdwallet-provider": "^1.0.17",
+    "video-react": "^0.14.1",
+    "web3": "^1.2.11"
   },
   "devDependencies": {
     "eslint": "^7.6.0",

@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import { createPow } from '@textile/powergate-client'
+import { withRouter } from 'next/router';
 
 import MainTemplate from './MainTemplate';
-// import web3 from '../../../../config/web3';
+import web3 from '../../../../config/web3';
 import NetworkTypeDialogContainer from './NetworkTypeDialog/NetworkTypeDialogContainer';
+import { getFilecoinInstance } from '../../../../config/contractinstance';
+import { _setToken } from '../../utils';
 
 const PowerGate = createPow({ host: "http://0.0.0.0:6002" });
 
@@ -27,6 +30,15 @@ class MainTemplateContainer extends Component {
         metamaskAddress: accounts[0],
       });
     } else {
+      // const isUserRegistered = await getFilecoinInstance.methods.isUserRegistered().call();
+      const isUserRegistered = true;
+      if (!isUserRegistered) {
+        this.props.router.push('/');
+      } else {
+        // const filecoinToken = await getFilecoinInstance.methods.getFilecoinToken().call();
+        // console.log('filecoinToken=====', filecoinToken);
+        // _setToken(filecoinToken);
+      }
       this.setState({ metamaskAddress: accounts[0], metamaskLoading: false });
     }
 
@@ -66,4 +78,4 @@ class MainTemplateContainer extends Component {
   }
 }
 
-export default MainTemplateContainer;
+export default withRouter(MainTemplateContainer);
