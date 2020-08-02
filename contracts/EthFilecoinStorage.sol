@@ -11,22 +11,22 @@ contract EthFilecoinStorage is Ownable {
         bool isRegister;
     }
     
-    mapping(address => profile) private profileMapping;
+    mapping(address => profile) public profileMapping;
     
-    modifier isRegister() {
-        require(profileMapping[msg.sender].isRegister, "Not registered.");
+    modifier isRegister(address _addr) {
+        require(profileMapping[_addr].isRegister, "Not registered.");
         _;
     }
     
-    modifier isNotRegister() {
-        require(!profileMapping[msg.sender].isRegister, "Already registered.");
+    modifier isNotRegister(address _addr) {
+        require(!profileMapping[_addr].isRegister, "Already registered.");
         _;
     }
     
     event registerUserevent(address owner);
     event uploadHash(address owner, string ipfsHash);
     
-    function registerUser(string memory filecoinToken, string memory userFilecoinAddress) public isNotRegister {
+    function registerUser(string memory filecoinToken, string memory userFilecoinAddress) public isNotRegister(msg.sender) {
         require(!profileMapping[msg.sender].isRegister, "Already registered.");
         profileMapping[msg.sender].filecoinToken = filecoinToken;
         profileMapping[msg.sender].userFilecoinAddress = userFilecoinAddress;
@@ -34,27 +34,29 @@ contract EthFilecoinStorage is Ownable {
         emit registerUserevent(msg.sender);
     }
     
-    function UploadNewIpfsHash(string memory ipfsHash) public isRegister {
+    function UploadNewIpfsHash(string memory ipfsHash) public isRegister(msg.sender) {
         profileMapping[msg.sender].ipfsHashOfMedia.push(ipfsHash);
         emit uploadHash(msg.sender, ipfsHash);
         
     }
     
-    function getIpfsHashByIndex(uint256 index) isRegister public view returns(string memory) {
+    function getIpfsHashByIndex(uint256 index, address _addr) isRegister(_addr) public view returns(string memory) {
         return profileMapping[msg.sender].ipfsHashOfMedia[index];
     }
     
-    function getIpfsHashLength() isRegister public view returns(uint256) {
-        return profileMapping[msg.sender].ipfsHashOfMedia.length;
+    function getIpfsHashLength(address _addr) isRegister((_addr)) public view returns(uint256) {
+        return profileMapping[_addr].ipfsHashOfMedia.length;
     }
     
-    function getFilecoinToken() isRegister public view returns(string memory) {
-        return profileMapping[msg.sender].filecoinToken;
+    function getFilecoinToken(address _addr) isRegister((_addr)) public view returns(string memory) {
+        return profileMapping[_addr].filecoinToken;
     }
     
-    function getFilecoinUserAddress() isRegister public view returns(string memory) {
-        return profileMapping[msg.sender].userFilecoinAddress;
+    function getFilecoinUserAddress(address _addr) isRegister((_addr)) public view returns(string memory) {
+        return profileMapping[_addr].userFilecoinAddress;
     }
-
-    function 
+    
+    function isRegisterUser(address _addr) public view returns(bool) {
+        return profileMapping[_addr].isRegister;
+    } 
 }
