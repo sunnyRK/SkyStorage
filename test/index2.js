@@ -37,41 +37,41 @@ async function exampleCode () {
         const buffer = fs.readFileSync(`/home/sunny123/Blockchain/test.png`)
         // console.log(buffer)
         const { cid } = await pow.ffs.stage(buffer)
-        // console.log(cid)
+        console.log(cid)
     
-        // // store the data in FFS using the default storage configuration
+        // // // store the data in FFS using the default storage configuration
         const { jobId } = await pow.ffs.pushStorageConfig(cid)
         // console.log(jobId)
     
-        // // watch the FFS job status to see the storage process progressing
-        // const jobsCancel = pow.ffs.watchJobs((job) => {
-        //   if (job.status === JobStatus.JOB_STATUS_CANCELED) {
-        //     console.log("job canceled")
-        //   } else if (job.status === JobStatus.JOB_STATUS_FAILED) {
-        //     console.log("job failed")
-        //   } else if (job.status === JobStatus.JOB_STATUS_SUCCESS) {
-        //     console.log("job success!")
-        //   }
-        // }, jobId)
+        // // // watch the FFS job status to see the storage process progressing
+        // // const jobsCancel = pow.ffs.watchJobs((job) => {
+        // //   if (job.status === JobStatus.JOB_STATUS_CANCELED) {
+        // //     console.log("job canceled")
+        // //   } else if (job.status === JobStatus.JOB_STATUS_FAILED) {
+        // //     console.log("job failed")
+        // //   } else if (job.status === JobStatus.JOB_STATUS_SUCCESS) {
+        // //     console.log("job success!")
+        // //   }
+        // // }, jobId)
     
-        // // watch all FFS events for a cid
+        // // // watch all FFS events for a cid
         const logsCancel = pow.ffs.watchLogs((logEvent) => {
         //   console.log(`received event for cid ${logEvent.cid}`)
         }, cid)
     
-        // // get the current desired storage configuration for a cid (this configuration may not be realized yet)
+        // // // get the current desired storage configuration for a cid (this configuration may not be realized yet)
         const { config } = await pow.ffs.getStorageConfig(cid)
-        // console.log(config)
+        // // console.log(config)
     
-        // // get the current actual storage configuration for a cid
-        const { cidInfo } = await pow.ffs.show(cid)
+        // // // get the current actual storage configuration for a cid
+        // const { cidInfo } = await pow.ffs.show(cid)
         // console.log(cidInfo)
     
-        // // retrieve data from FFS by cid
+        // // // retrieve data from FFS by cid
         const bytes = await pow.ffs.get(cid)
-        console.log(bytes)
+        // console.log(bytes)
 
-        // await fs.writeFile('/home/sunny123/Blockchain/HackFS/test1.png', new Buffer(bytes), callback)
+        await fs.writeFile('/home/sunny123/Blockchain/HackFS/test4.png', new Buffer(bytes), callback)
     
         // // send FIL from an address managed by your FFS instance to any other address
         // await pow.ffs.sendFil(addrsList[0].addr, "<some other address>", 1000)
