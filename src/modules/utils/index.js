@@ -2,8 +2,8 @@ import { createPow } from "@textile/powergate-client";
 import * as System from 'slate-react-system'
 import web3 from "../../../config/web3";
 import {getFilecoinInstance} from "../../../config/contractinstance";
-const PG = createPow({ host: "https://grpcweb.slate.textile.io" });
-// const PG = createPow({ host: "http://0.0.0.0:6002" });
+// const PG = createPow({ host: "https://grpcweb.slate.textile.io" });
+const PG = createPow({ host: "http://0.0.0.0:6002" });
 let userToken = null;
 
 export const PowerGate = PG;

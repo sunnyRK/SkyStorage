@@ -5,11 +5,9 @@ import DashboardContainer from '../src/modules/components/dashboard/DashboardCon
 import Auth from '../src/hoc/auth';
 
 class Dashboard extends Component {
- 
   render() {
-    const { metamaskLoginMessage } = this.props;
     return (
-      <MainTemplate metamaskLoginMessage={metamaskLoginMessage}>
+      <MainTemplate>
         <DashboardContainer />
       </MainTemplate>
     );

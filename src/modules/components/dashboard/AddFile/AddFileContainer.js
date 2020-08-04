@@ -14,12 +14,14 @@ class AddFileDialogContainer extends Component {
     super(props);
     this.state = {
       value: 'both',
+      uploadLoading: false,
     };
   }
 
   _handleSubmit = async (data) => {
     try {
       const { value } = this.state;
+      this.setState({ uploadLoading: true });
       const { defaultStorageConfig } = await getDefaultStorageConfig();
       const storageConfig = {
         ...defaultStorageConfig,
@@ -38,9 +40,10 @@ class AddFileDialogContainer extends Component {
       toast.success('File Successfully Uploaded' ,{
         position: toast.POSITION.TOP_RIGHT,
       });
+      this.setState({ uploadLoading: false });
     } catch (error) {
-        console.log('error=====', error);
-        toast.success('Something went wrong! Please try again later.' ,{
+        this.setState({ uploadLoading: false })
+        toast.error('Something went wrong! Please try again later.' ,{
           position: toast.POSITION.TOP_RIGHT,
         });
     }
@@ -51,6 +54,7 @@ class AddFileDialogContainer extends Component {
   };
 
   render() {
+    const { uploadLoading, value } = this.state;
     return (
       <Dialog
         className="custom-dialog custom-content-style"
@@ -72,7 +76,8 @@ class AddFileDialogContainer extends Component {
           <AddFile
             _handleSubmit={this._handleSubmit}
             handleChange={this.handleChange}
-            value={this.state.value}  
+            value={value}
+            uploadLoading={uploadLoading}
           />
         </DialogContent>
       </Dialog>

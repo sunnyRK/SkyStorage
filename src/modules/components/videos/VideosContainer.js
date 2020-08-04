@@ -15,9 +15,11 @@ class VidoesContainer extends Component {
     selectedFile: null,
     account: '',
     ipfsHasharray: [],
+    vidoesLoading: false,
   }
 
   componentDidMount = async () => {
+    this.setState({ vidoesLoading: true });
     const ipfsHasharray = [];
     const accounts = await web3.eth.getAccounts();
     const hashLength = await getFilecoinInstance().methods.getIpfsHashLength(accounts[0]).call();
@@ -27,15 +29,15 @@ class VidoesContainer extends Component {
       ipfsHasharray.push(hash);
     }
     this.setState({
-      ipfsHasharray
+      ipfsHasharray, vidoesLoading: false,
     });
-    console.log(this.state.ipfsHasharray);
   };
 
   render() {
     return (
       <Vidoes 
         ipfsHasharray={this.state.ipfsHasharray}
+        vidoesLoading={this.state.vidoesLoading}
       />
     );
   }
