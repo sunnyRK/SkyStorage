@@ -9,14 +9,6 @@ import { _handleCreateToken, _setToken, _handleInfo } from '../../utils';
 import web3 from "../../../../config/web3";
 
 class LandingContainer extends Component {
-  async componentDidMount() {
-    // const isUserRegistered = await getFilecoinInstance.methods.isUserRegistered().call();
-    // const isUserRegistered = false;
-    // if (isUserRegistered) {
-    //   this.props.router.push('/dashboard');
-    // }
-  }
-
   onRegisterClick = async () => {
     try {
       const accounts = await web3.eth.getAccounts();

@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
 
 import MainTemplate from '../src/modules/shared/main-template/MainTemplateContainer';
-import Landing from '../src/modules/components/landing/LandingContainer';
+import LandingContainer from '../src/modules/components/landing/LandingContainer';
+import Auth from '../src/hoc/auth';
 
-class Dashboard extends Component { 
+class Landing extends Component { 
   render() {
     return (
-      <MainTemplate>
-        <Landing />
-      </MainTemplate>
+      <LandingContainer />
     );
   }
 }
 
-export default Dashboard;
+export default Auth(Landing);

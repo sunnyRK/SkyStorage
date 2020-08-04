@@ -1,9 +1,8 @@
 
-const MainTemplate = ({ children, metamaskAddress }) => (
+const MainTemplate = ({ children }) => (
   <div className="main-template">
     <div className="main-header">
       <div className="app-name">SkyStorage</div>
-      <div className="metamask-address">{metamaskAddress}</div>
     </div>
     <div className="main-content">
       {children}
