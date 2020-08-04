@@ -25,6 +25,7 @@
   }
   .main-content {
     height: calc(100% - #{$header-height});
+    overflow: auto;
   }
   .main-footer {
     .app-footer {

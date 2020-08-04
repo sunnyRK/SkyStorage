@@ -14,8 +14,6 @@ class NetworkTypeDialogContainer extends Component {
   render() {
     return (
       <Dialog
-        // onClose={handleClose}
-        // aria-labelledby="simple-dialog-title"
         className="custom-dialog custom-content-style"
         open={this.props.openDialog}
       >

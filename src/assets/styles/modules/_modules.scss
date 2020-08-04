@@ -1,12 +1,13 @@
 @import './dashboard/dashboard';
+@import './dashboard/add-file-dialog';
 
 @import './main-template/main-template';
 
 @import './block-ui/block-ui';
 @import './block-ui/google-loader';
 
-@import './images/images';
-@import './images/image-uploader';
 @import './videos//videos';
 
 @import './landing/landing';
+
+@import './info/info';

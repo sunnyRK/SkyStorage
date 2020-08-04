@@ -1,7 +1,4 @@
-import React, { Component } from 'react';
-import { Player } from 'video-react';
-import Button from '@material-ui/core/Button';
-import { CreateFilecoinStorageDeal } from "slate-react-system";
+import React from 'react';
 
 const videoUrls = [
   {
@@ -18,34 +15,24 @@ const videoUrls = [
   },
 ]
 
-const Videos = ({ 
-    _handleSubmit, onFileChange, ipfsHasharray
-   }) => (
-  <div className="videos">
+const Videos = ({ ipfsHasharray }) => (
+  <div className="videos card">
     <div className="videos-header">
-      <h3>Videos</h3>
-      {/* <input type="file" onChange={onFileChange} />  */}
-      {/* <Button
-        type="submit"
-        primary
-        className="upload-btn"
-        onClick={_handleSubmit}
-      > 
-        Upload Video
-      </Button> */}
-      <CreateFilecoinStorageDeal onSubmit={_handleSubmit} />;
-
+      <h3>Your Videos</h3>
     </div>
     <div className="videos-content">
       {
-
-        ipfsHasharray.map(name => (
-          <video 
-            controls 
-            src={"https://gateway.ipfs.io/ipfs/"+name}
-            className="video-player"
-          />
-        ))
+        ipfsHasharray.length > 0 ? (
+          ipfsHasharray.map(name => (
+            <video 
+              controls 
+              src={"https://gateway.ipfs.io/ipfs/"+name}
+              className="video-player"
+            />
+          ))
+        ) : (
+          <p className="no-content">You haven't uploaded videos yet</p>
+        )
       }
     </div>
   </div>

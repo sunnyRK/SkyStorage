@@ -1,14 +1,13 @@
 .dashboard {
   padding: 30px;
-  .dashboard-tabs {
-    border:#203a5b 1px solid;
-    .tabs-flexcontainer {
-      button {
-        width: calc(100%/2);
-      }
-    }
+  display: flex;
+  flex: 7;
+  .content-section {
+    flex: 5;
+    margin-right: 40px;
   }
-  .dashboard-content {
-    padding: 30px;
+  .info-section {
+    flex: 2;
+    overflow: hidden;
   }
 }

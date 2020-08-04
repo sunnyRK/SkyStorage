@@ -23,14 +23,16 @@
 }
 
 .custom-content-style {
+  top: $header-height !important;
+  min-width: 600px;
+  .paper-scroll-paper {
+    min-width: 600px;
+  }
   > div {
-    // width: 100% !important;
     border-radius: 0px !important;
   }
   > div:last-child {
-    // max-width: 600px;
     max-width: unset;
     position: relative;
-    // top: 15% !important;
   }
 }

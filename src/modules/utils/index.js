@@ -2,6 +2,7 @@ import { createPow } from "@textile/powergate-client";
 import * as System from 'slate-react-system'
 import web3 from "../../../config/web3";
 import {getFilecoinInstance} from "../../../config/contractinstance";
+// const PG = createPow({ host: "https://grpcweb.slate.textile.io" });
 const PG = createPow({ host: "http://0.0.0.0:6002" });
 let userToken = null;
 
@@ -43,18 +44,30 @@ export const _uploadToFilecoin = async (data) => {
     });
   await getByteArray();
 
-    console.log(userToken);
-
   const { cid } = await PG.ffs.stage(buffer);
-  console.log(cid);
   const { jobId } = await PG.ffs.pushStorageConfig(cid);
+  const jobDetails = null;
   const cancel = PG.ffs.watchJobs((job) => {
-    console.log(job);
+    console.log('job====', job);
+    jobDetails = job;
   }, jobId);
   const bytes = await PG.ffs.get(cid)
-  console.log(bytes)
-
+  console.log('bytes====', bytes)
+  console.log('cancel====', cancel);
+  console.log('job====', job);
   await getFilecoinInstance().methods.UploadNewIpfsHash(cid).send({
     from: accounts[0]
   });
+  return { cid };
 };
+
+export const getDefaultStorageConfig = async () => {
+  console.log('UserTOken=====', userToken);
+  const { defaultStorageConfig } = await PowerGate.ffs.defaultStorageConfig();
+  return { defaultStorageConfig };
+}
+
+export const setDefaultStorageConfig = async (storageConfig) => {
+  await PowerGate.ffs.setDefaultStorageConfig(storageConfig);
+  return true;
+}

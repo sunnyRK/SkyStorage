@@ -1,41 +1,27 @@
-import React, { Component, createRef } from 'react';
-
 import Dashboard from './Dashboard';
-import ImagesContainer from '../images/ImagesContainer';
-import VideosContainer from '../videos/VideosContainer';
+import AddFileContainer from './AddFile/AddFileContainer';
 
-const tabs = [
-  {
-    id: 0,
-    label: 'Images',
-    component: <ImagesContainer />,
-    hidden: false,
-  },
-  {
-    id: 1,
-    label: 'Videos',
-    component: <VideosContainer />,
-    hidden: false,
-  },
-];
-
-class DashboardContainer extends Component {
+class DashboardContainer extends React.Component {
   state = {
-    activeTab: 1,
-  };
-
-  handleChange = (event, activeTab) => {
-    this.setState({ activeTab });
+    isAddFileOpen: false,
   }
- 
+
+  handleState = (state) => {
+    this.setState(state);
+  }
+
   render() {
     return (
-      <Dashboard
-        activeTab={this.state.activeTab}
-        tabs={tabs}
-        handleChange={this.handleChange}
-      />
-    );
+      <>
+        <Dashboard
+          handleState={this.handleState}
+          />
+        <AddFileContainer
+          openDialog={this.state.isAddFileOpen}
+          handleState={this.handleState}
+        />
+      </>
+    )
   }
 }
 
