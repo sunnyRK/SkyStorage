@@ -15,6 +15,7 @@ class AddFileDialogContainer extends Component {
     this.state = {
       value: 'both',
       uploadLoading: false,
+      storageConfigLoading: false,
       storageConfig: {},
     };
   }
@@ -24,7 +25,7 @@ class AddFileDialogContainer extends Component {
   }
 
   handleStorageConfig = async () => {
-    this.setState({ uploadLoading: true });
+    this.setState({ storageConfigLoading: true });
       const { value } = this.state;
       const { defaultStorageConfig } = await getDefaultStorageConfig();
       const storageConfig = {
@@ -38,7 +39,7 @@ class AddFileDialogContainer extends Component {
           enabled: value === 'both' ? true : (value === 'ipfs' ? true : false )
         },
       };
-      this.setState({ storageConfig, uploadLoading: false });
+      this.setState({ storageConfig, storageConfigLoading: false });
       return storageConfig;
   }
 
@@ -48,11 +49,11 @@ class AddFileDialogContainer extends Component {
       const storageConfig =  await this.handleStorageConfig();
       await setDefaultStorageConfig(storageConfig);
       await _uploadToFilecoin(data);
-      this.props.handleState({ isAddFileOpen: false });
+      this.props.handleState({ isAddFileOpen: false, uploadLoading: false });
+      window.location.reload();
       toast.success('File Successfully Uploaded' ,{
         position: toast.POSITION.TOP_RIGHT,
       });
-      this.setState({ uploadLoading: false });
     } catch (error) {
       console.log('error======', error);
         this.setState({ uploadLoading: false })
@@ -71,7 +72,7 @@ class AddFileDialogContainer extends Component {
   };
 
   render() {
-    const { uploadLoading, value } = this.state;
+    const { uploadLoading, value, storageConfigLoading } = this.state;
     return (
       <Dialog
         className="custom-dialog custom-content-style"
@@ -95,6 +96,7 @@ class AddFileDialogContainer extends Component {
             handleChange={this.handleChange}
             value={value}
             uploadLoading={uploadLoading}
+            storageConfigLoading={storageConfigLoading}
             storageConfigJSON={this.state.storageConfig}
           />
         </DialogContent>

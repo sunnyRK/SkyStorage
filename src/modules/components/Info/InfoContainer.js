@@ -1,5 +1,7 @@
 import Info from './Info';
 import { _uploadToFilecoin, _handleInfo, _handleCreateToken, _setToken } from '../../utils';
+import web3 from '../../../../config/web3';
+import { getFilecoinInstance } from '../../../../config/contractinstance';
 
 class InfoContainer extends React.Component {
   state = {
@@ -11,8 +13,9 @@ class InfoContainer extends React.Component {
 
   async componentDidMount() {
     this.setState({ infoLoading: true });
-    const filecoinToken = await _handleCreateToken();
-      _setToken(filecoinToken);
+    const accounts = await web3.eth.getAccounts();
+    const filecoinToken = await getFilecoinInstance().methods.getFilecoinToken(accounts[0]).call();
+    _setToken(filecoinToken);
     const { addrsList, info } = await _handleInfo();
     this.setState({ addrsList, info, infoLoading: false });
   }

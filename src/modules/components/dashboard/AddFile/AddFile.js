@@ -9,10 +9,11 @@ const DynamicReactJson = dynamic(import('react-json-view'), { ssr: false });
 const AddFile = ({
   handleChange, _handleSubmit, value,
   uploadLoading, storageConfigJSON,
+  storageConfigLoading,
 }) => (
   <BlockUI
     tag="div"
-    blocking={uploadLoading}
+    blocking={uploadLoading || storageConfigLoading}
     loader={<GoogleLoader height={50} width={50} />}
     className="full-screen"
   >
