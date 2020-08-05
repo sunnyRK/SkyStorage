@@ -1,3 +1,5 @@
+import BlockUI from 'react-block-ui';
+import GoogleLoader from '../../shared/GoogleLoader';
 import Button from '@material-ui/core/Button';
 
 const Landing = ({ onRegisterClick, landingLoading }) => (

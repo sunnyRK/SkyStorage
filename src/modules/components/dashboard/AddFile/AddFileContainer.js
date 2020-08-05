@@ -15,13 +15,17 @@ class AddFileDialogContainer extends Component {
     this.state = {
       value: 'both',
       uploadLoading: false,
+      storageConfig: {},
     };
   }
 
-  _handleSubmit = async (data) => {
-    try {
+  async componentDidMount() {
+    await this.handleStorageConfig();
+  }
+
+  handleStorageConfig = async () => {
+    this.setState({ uploadLoading: true });
       const { value } = this.state;
-      this.setState({ uploadLoading: true });
       const { defaultStorageConfig } = await getDefaultStorageConfig();
       const storageConfig = {
         ...defaultStorageConfig,
@@ -34,6 +38,14 @@ class AddFileDialogContainer extends Component {
           enabled: value === 'both' ? true : (value === 'ipfs' ? true : false )
         },
       };
+      this.setState({ storageConfig, uploadLoading: false });
+      return storageConfig;
+  }
+
+  _handleSubmit = async (data) => {
+    try {
+      this.setState({ uploadLoading: true });
+      const storageConfig =  await this.handleStorageConfig();
       await setDefaultStorageConfig(storageConfig);
       await _uploadToFilecoin(data);
       this.props.handleState({ isAddFileOpen: false });
@@ -42,6 +54,7 @@ class AddFileDialogContainer extends Component {
       });
       this.setState({ uploadLoading: false });
     } catch (error) {
+      console.log('error======', error);
         this.setState({ uploadLoading: false })
         toast.error('Something went wrong! Please try again later.' ,{
           position: toast.POSITION.TOP_RIGHT,
@@ -50,7 +63,11 @@ class AddFileDialogContainer extends Component {
   };
 
   handleChange = (event) => {
-    this.setState({ value: event.target.value});
+    this.setState({
+      value: event.target.value
+    }, () => {
+      this.handleStorageConfig();
+    });
   };
 
   render() {
@@ -78,6 +95,7 @@ class AddFileDialogContainer extends Component {
             handleChange={this.handleChange}
             value={value}
             uploadLoading={uploadLoading}
+            storageConfigJSON={this.state.storageConfig}
           />
         </DialogContent>
       </Dialog>

@@ -3,7 +3,7 @@ import BlockUI from 'react-block-ui';
 import GoogleLoader from '../modules/shared/GoogleLoader';
 import { getFilecoinInstance } from '../../config/contractinstance';
 import web3 from '../../config/web3';
-import { _setToken } from '../modules/utils';
+import { _setToken, _handleCreateToken } from '../modules/utils';
 import NetworkTypeDialogContainer from '../modules/shared/main-template/NetworkTypeDialog/NetworkTypeDialogContainer';
 
 export default (ComposedComponent) => {
@@ -13,7 +13,7 @@ export default (ComposedComponent) => {
       metamaskLoginMessage: '',
     }
 
-    async componentWillMount() {
+    async componentDidMount() {
       let networkType;
       const accounts = await web3.eth.getAccounts();
       if (accounts.length === 0) {

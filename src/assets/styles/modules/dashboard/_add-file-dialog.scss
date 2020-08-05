@@ -1,24 +1,28 @@
 .add-file-dialog {
-  .heading {
-    font-weight: bold;
-  }
-  .default-settings {
-    .radio-style-root {
-      color: black;
+  display: flex;
+  .left-section {
+    width: 50%;
+    .heading {
+      font-weight: bold;
     }
-  }
-  .add-file-details {
-    margin-top: 10px;
-    .file-details {
-      margin-top: 10px;
-      .css-oybsr4 {
-        padding: unset;
-        box-shadow: unset;
-        border: unset;
-        width: 150px;
+    .default-settings {
+      .radio-style-root {
+        color: black;
       }
-      .css-8a0w9u, .css-drt6n8 {
-        width: 160px;
+    }
+    .add-file-details {
+      margin-top: 10px;
+      .file-details {
+        margin-top: 10px;
+        .css-oybsr4 {
+          padding: unset;
+          box-shadow: unset;
+          border: unset;
+          width: 150px;
+        }
+        .css-8a0w9u, .css-drt6n8 {
+          width: 160px;
+        }
       }
     }
   }
