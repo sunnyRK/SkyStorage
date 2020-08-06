@@ -9,61 +9,87 @@ let userToken = null;
 export const PowerGate = PG;
 
 export const _handleCreateToken = async () => {
-  const FFS = await PG.ffs.create();
-  const token = FFS.token ? FFS.token : null;
-  return token;
+  try {
+    const FFS = await PG.ffs.create();
+    const token = FFS.token ? FFS.token : null;
+    return token; 
+  } catch (error) {
+    console.log(error)
+  }
 };
 
 export const _setToken = (token) => {
-  userToken = token;
-  PG.setToken(token);
+  try {
+    console.log("Filecoin Token: ", token);
+    userToken = token;
+    PG.setToken(token); 
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 export const _handleInfo = async (token) => {
-  const { addrsList } = await PG.ffs.addrs();
-  const { info } = await PG.ffs.info();
-  return { addrsList, info };
+  try {
+    const { addrsList } = await PG.ffs.addrs();
+    const { info } = await PG.ffs.info();
+    return { addrsList, info }; 
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 export const _uploadToFilecoin = async (data) => {
+  try {    
+    const accounts = await web3.eth.getAccounts();
 
-  const accounts = await web3.eth.getAccounts();
+    const file = data.file.files[0];
+    var buffer = [];
+    const getByteArray = async () =>
+      new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onloadend = function (e) {
+          if (e.target.readyState == FileReader.DONE) {
+            buffer = new Uint8Array(e.target.result);
+          }
+          resolve();
+        };
+        reader.readAsArrayBuffer(file);
+      });
+    await getByteArray();
 
-  const file = data.file.files[0];
-  var buffer = [];
-  const getByteArray = async () =>
-    new Promise((resolve) => {
-      const reader = new FileReader();
-      reader.onloadend = function (e) {
-        if (e.target.readyState == FileReader.DONE) {
-          buffer = new Uint8Array(e.target.result);
-        }
-        resolve();
-      };
-      reader.readAsArrayBuffer(file);
+    const { cid } = await PG.ffs.stage(buffer);
+    const { jobId } = await PG.ffs.pushStorageConfig(cid);
+    let jobDetails;
+    const cancel = PG.ffs.watchJobs((job) => {
+      console.log('job====', job);
+      jobDetails = job;
+    }, jobId);
+    // const bytes = await PG.ffs.get(cid);
+    await getFilecoinInstance().methods.UploadNewIpfsHash(cid, true, true).send({
+      from: accounts[0]
     });
-  await getByteArray();
+    return { cid, jobDetails };
 
-  const { cid } = await PG.ffs.stage(buffer);
-  const { jobId } = await PG.ffs.pushStorageConfig(cid);
-  let jobDetails;
-  const cancel = PG.ffs.watchJobs((job) => {
-    console.log('job====', job);
-    jobDetails = job;
-  }, jobId);
-  // const bytes = await PG.ffs.get(cid);
-  await getFilecoinInstance().methods.UploadNewIpfsHash(cid, true, true).send({
-    from: accounts[0]
-  });
-  return { cid, jobDetails };
+  } catch (error) {
+    console.log(error)
+  }
 };
 
 export const getDefaultStorageConfig = async () => {
-  const { defaultStorageConfig } = await PG.ffs.defaultStorageConfig();
-  return { defaultStorageConfig };
+  try {
+    const { defaultStorageConfig } = await PG.ffs.defaultStorageConfig();
+    return { defaultStorageConfig }; 
+  } catch (error) {
+    console.log(error) 
+  }
 }
 
 export const setDefaultStorageConfig = async (storageConfig) => {
-  await PG.ffs.setDefaultStorageConfig(storageConfig);
-  return true;
+  try {
+    console.log(storageConfig);
+    await PG.ffs.setDefaultStorageConfig(storageConfig);
+    return true; 
+  } catch (error) {
+    console.log(error)
+  }
 }
