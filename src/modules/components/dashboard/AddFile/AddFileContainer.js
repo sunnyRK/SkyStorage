@@ -43,7 +43,7 @@ class AddFileDialogContainer extends Component {
       this.setState({ storageConfig, storageConfigLoading: false });
       return storageConfig; 
     } catch (error) {
-      console.log(error)
+      console.log('handleStorageConfig error=====', error);
     }
   }
 

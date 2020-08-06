@@ -43,6 +43,7 @@ export const _uploadToFilecoin = async (data) => {
     const accounts = await web3.eth.getAccounts();
 
     const file = data.file.files[0];
+    console.log('file=====', file);
     var buffer = [];
     const getByteArray = async () =>
       new Promise((resolve) => {
@@ -65,13 +66,13 @@ export const _uploadToFilecoin = async (data) => {
       jobDetails = job;
     }, jobId);
     // const bytes = await PG.ffs.get(cid);
-    await getFilecoinInstance().methods.UploadNewIpfsHash(cid, true, true).send({
+    await getFilecoinInstance().methods.UploadNewIpfsHash(cid, file.name).send({
       from: accounts[0]
     });
     return { cid, jobDetails };
 
   } catch (error) {
-    console.log(error)
+    console.log('_uploadToFilecoin error====', error)
   }
 };
 
@@ -90,6 +91,15 @@ export const setDefaultStorageConfig = async (storageConfig) => {
     await PG.ffs.setDefaultStorageConfig(storageConfig);
     return true; 
   } catch (error) {
-    console.log(error)
+    console.log('setDefaultStorageConfig error===', error);
+  }
+}
+
+export const getStorageConfig = async (cid) => {
+  try {
+    const { config } = await PG.ffs.getStorageConfig(cid);
+    return { config };
+  } catch (error) {
+    console.log('getStorageConfig error====', error);
   }
 }
