@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 
 import Vidoes from './Videos';
-import * as System from 'slate-react-system'
-import { createPow } from '@textile/powergate-client'
 import { getFilecoinInstance } from '../../../../config/contractinstance';
 import web3 from '../../../../config/web3';
-import { _uploadToFilecoin } from '../../utils';
+import { _uploadToFilecoin, getStorageConfig } from '../../utils';
 
 class VidoesContainer extends Component {
   state = { 
@@ -26,7 +24,14 @@ class VidoesContainer extends Component {
     console.log(hashLength)
     for (var i=0; i<hashLength; i++) {
       const hash = await getFilecoinInstance().methods.getIpfsHashByIndex(i, accounts[0]).call();
-      ipfsHasharray.push(hash);
+      const filename = await getFilecoinInstance().methods.getFileName(accounts[0], hash).call();
+      const { config } = await getStorageConfig(hash);
+      const detailsObj = {
+        filename: filename,
+        hash: hash,
+        config: { ...config },
+      }
+      ipfsHasharray.push(detailsObj);
     }
     this.setState({
       ipfsHasharray, vidoesLoading: false,
