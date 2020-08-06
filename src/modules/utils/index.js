@@ -52,7 +52,7 @@ export const _uploadToFilecoin = async (data) => {
     jobDetails = job;
   }, jobId);
   // const bytes = await PG.ffs.get(cid);
-  await getFilecoinInstance().methods.UploadNewIpfsHash(cid).send({
+  await getFilecoinInstance().methods.UploadNewIpfsHash(cid, true, true).send({
     from: accounts[0]
   });
   return { cid, jobDetails };
