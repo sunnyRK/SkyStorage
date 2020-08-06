@@ -9,6 +9,8 @@ contract EthFilecoinStorage is Ownable {
         string filecoinToken;
         string userFilecoinAddress;
         bool isRegister;
+        bool isStorageInFilecoin;
+        bool isStorageInIPFS;
     }
     
     mapping(address => profile) public profileMapping;
@@ -34,14 +36,16 @@ contract EthFilecoinStorage is Ownable {
         emit registerUserevent(msg.sender);
     }
     
-    function UploadNewIpfsHash(string memory ipfsHash) public isRegister(msg.sender) {
+    function UploadNewIpfsHash(string memory ipfsHash, bool isFilecoin, bool isIPFS) public isRegister(msg.sender) {
         profileMapping[msg.sender].ipfsHashOfMedia.push(ipfsHash);
+        profileMapping[msg.sender].isStorageInFilecoin = isFilecoin;
+        profileMapping[msg.sender].isStorageInIPFS = isIPFS;
         emit uploadHash(msg.sender, ipfsHash);
         
     }
     
     function getIpfsHashByIndex(uint256 index, address _addr) isRegister(_addr) public view returns(string memory) {
-        return profileMapping[msg.sender].ipfsHashOfMedia[index];
+        return profileMapping[_addr].ipfsHashOfMedia[index];
     }
     
     function getIpfsHashLength(address _addr) isRegister((_addr)) public view returns(uint256) {
@@ -59,4 +63,11 @@ contract EthFilecoinStorage is Ownable {
     function isRegisterUser(address _addr) public view returns(bool) {
         return profileMapping[_addr].isRegister;
     } 
+    
+    function whichStorage(address _addr) public view returns(bool, bool) {
+        return (
+            profileMapping[msg.sender].isStorageInFilecoin,
+            profileMapping[msg.sender].isStorageInIPFS
+        );
+    }
 }
