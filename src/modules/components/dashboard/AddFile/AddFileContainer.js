@@ -26,7 +26,7 @@ class AddFileDialogContainer extends Component {
 
   handleStorageConfig = async () => {
     try {
-      this.setState({ storageConfigLoading: true });
+      // this.setState({ storageConfigLoading: true });
       const { value } = this.state;
       const { defaultStorageConfig } = await getDefaultStorageConfig();
       const storageConfig = {
