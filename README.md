@@ -1,4 +1,4 @@
-# SkyStorage - (HackFS-2020)
+# SkyStorage - (Filecoin)
 
 SkyStorage is a decentralized video player. Where user can upload video on web3 platforms like Filecoin and IPFS.   
 Platform will give ability to users for change the storage config of individual video file(like change in, hot and cold storage).    
